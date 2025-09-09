@@ -1,24 +1,41 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [profile, setProfile] = useState({
-    fullName: "Olivia Carter",
-    dob: "1988-07-12",
-    gender: "Female",
-    nationality: "American",
-    email: "olivia.carter@email.com",
-    phone: "+1 (555) 123-4567",
-    address: "123 Financial Street, New York, NY 10001",
+
+  // Initialize form with default values
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    defaultValues: {
+      fullName: "Olivia Carter",
+      dob: "1988-07-12",
+      gender: "Female",
+      nationality: "American",
+      email: "olivia.carter@email.com",
+      phone: "+1 (555) 123-4567",
+      address: "123 Financial Street, New York, NY 10001",
+    },
   });
 
-  const handleChange = (e) => {
-    setProfile({ ...profile, [e.target.name]: e.target.value });
-  };
+  const onSubmit = (data) => {
+    console.log("Form submitted:", data);
 
-  const handleSave = () => {
-    setIsEditing(false);
-    // You can add API call here to save changes
+    // Example API call
+    // fetch("/api/profile", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(data),
+    // })
+    //   .then((res) => res.json())
+    //   .then((result) => {
+    //     console.log("Saved:", result);
+    //     setIsEditing(false);
+    //   });
   };
 
   return (
@@ -29,97 +46,98 @@ const Profile = () => {
         <div className="relative z-10 flex flex-col items-center">
           <img
             src="/Images/profile_image.jpg"
-            className="w-28 h-12 rounded-full border-4 border-white shadow-lg" alt="profile image"
+            className="w-28 h-12 rounded-full border-4 border-white shadow-lg"
+            alt="profile"
           />
-          <h1 className="text-2xl font-bold mt-4">{profile.fullName}</h1>
+          <h1 className="text-2xl font-bold mt-4">Olivia Carter</h1>
           <p className="text-gray-200">Senior Operations Manager</p>
           <p className="text-sm text-gray-300">Joined: 2021</p>
         </div>
       </div>
 
       <div className="max-w-4xl mx-auto p-6 space-y-8">
-        {/* Personal Information */}
-        <section className="bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-800">
-          <h2 className="text-lg font-semibold mb-4 text-indigo-400">
-            Personal Information
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <EditableField
-              label="Full Name"
-              name="fullName"
-              value={profile.fullName}
-              isEditing={isEditing}
-              onChange={handleChange}
-            />
-            <EditableField
-              label="Date of Birth"
-              name="dob"
-              type="date"
-              value={profile.dob}
-              isEditing={isEditing}
-              onChange={handleChange}
-            />
-            <EditableField
-              label="Gender"
-              name="gender"
-              type="select"
-              options={["Female", "Male", "Other"]}
-              value={profile.gender}
-              isEditing={isEditing}
-              onChange={handleChange}
-            />
-            <EditableField
-              label="Nationality"
-              name="nationality"
-              value={profile.nationality}
-              isEditing={isEditing}
-              onChange={handleChange}
-            />
-          </div>
-        </section>
-
-        {/* Contact Details */}
-        <section className="bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-800">
-          <h2 className="text-lg font-semibold mb-4 text-indigo-400">
-            Contact Details
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <EditableField
-              label="Email"
-              name="email"
-              value={profile.email}
-              isEditing={isEditing}
-              onChange={handleChange}
-            />
-            <EditableField
-              label="Phone"
-              name="phone"
-              value={profile.phone}
-              isEditing={isEditing}
-              onChange={handleChange}
-            />
-            <EditableField
-              label="Address"
-              name="address"
-              value={profile.address}
-              isEditing={isEditing}
-              onChange={handleChange}
-            />
-          </div>
-
-          {isEditing && (
-            <div className="mt-6 flex justify-end pe-2 pb-2">
-              <button
-                onClick={handleSave}
-                className="btn btn-primary btn-sm"
-              >
-                Save Changes
-              </button>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {/* -------------------------- Personal Information ------------------------------- */}
+          <section className="bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-800">
+            <h2 className="text-lg font-semibold mb-4 text-indigo-400">
+              Personal Information
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <EditableField
+                label="Full Name"
+                name="fullName"
+                register={register}
+                errors={errors}
+                isEditing={isEditing}
+              />
+              <EditableField
+                label="Date of Birth"
+                name="dob"
+                type="date"
+                register={register}
+                errors={errors}
+                isEditing={isEditing}
+              />
+              <EditableField
+                label="Gender"
+                name="gender"
+                type="select"
+                options={["Female", "Male", "Other"]}
+                register={register}
+                errors={errors}
+                isEditing={isEditing}
+              />
+              <EditableField
+                label="Nationality"
+                name="nationality"
+                register={register}
+                errors={errors}
+                isEditing={isEditing}
+              />
             </div>
-          )}
-        </section>
+          </section>
 
-        {/* Stats */}
+          {/* ----------------------------- Contact Details ------------------------------- */}
+          <section className="bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-800">
+            <h2 className="text-lg font-semibold mb-4 text-indigo-400">
+              Contact Details
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <EditableField
+                label="Email"
+                name="email"
+                register={register}
+                errors={errors}
+                isEditing={isEditing}
+                rules={{ required: "Email is required" }}
+              />
+              <EditableField
+                label="Phone"
+                name="phone"
+                register={register}
+                errors={errors}
+                isEditing={isEditing}
+              />
+              <EditableField
+                label="Address"
+                name="address"
+                register={register}
+                errors={errors}
+                isEditing={isEditing}
+              />
+            </div>
+
+            {isEditing && (
+              <div className="mt-6 flex justify-end pe-2 pb-2">
+                <button type="submit" className="btn btn-primary btn-sm">
+                  Save Changes
+                </button>
+              </div>
+            )}
+          </section>
+        </form>
+
+        {/* --------------------------------------- Stats ---------------------------------------- */}
         <section className="bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-800">
           <h2 className="text-lg font-semibold mb-4 text-indigo-400">
             Activity Stats
@@ -131,7 +149,7 @@ const Profile = () => {
           </div>
         </section>
 
-        {/* Actions */}
+        {/* --------------------------------- Actions ------------------------------------- */}
         <section className="flex flex-wrap gap-4 justify-center">
           {!isEditing ? (
             <button
@@ -142,7 +160,10 @@ const Profile = () => {
             </button>
           ) : (
             <button
-              onClick={() => setIsEditing(false)}
+              onClick={() => {
+                setIsEditing(false);
+                reset(); // Reset to last saved values
+              }}
               className="px-5 py-2 bg-gray-600 rounded-xl hover:bg-gray-700 transition"
             >
               Cancel
@@ -160,16 +181,23 @@ const Profile = () => {
   );
 };
 
-// Editable field component
-const EditableField = ({ label, name, value, type = "text", options, isEditing, onChange }) => (
+// Editable field with RHF
+const EditableField = ({
+  label,
+  name,
+  type = "text",
+  options,
+  register,
+  errors,
+  isEditing,
+  rules = {},
+}) => (
   <div>
     <p className="text-sm text-gray-400 mb-1">{label}</p>
     {isEditing ? (
       type === "select" ? (
         <select
-          name={name}
-          value={value}
-          onChange={onChange}
+          {...register(name, rules)}
           className="w-full p-2 rounded-lg bg-gray-800 border border-gray-700 text-gray-200"
         >
           {options.map((opt, idx) => (
@@ -181,14 +209,18 @@ const EditableField = ({ label, name, value, type = "text", options, isEditing, 
       ) : (
         <input
           type={type}
-          name={name}
-          value={value}
-          onChange={onChange}
+          {...register(name, rules)}
           className="w-full p-2 rounded-lg bg-gray-800 border border-gray-700 text-gray-200"
         />
       )
     ) : (
-      <p className="text-base font-medium text-gray-200">{value}</p>
+      <p className="text-base font-medium text-gray-200">
+        {errors[name] ? (
+          <span className="text-red-400">{errors[name].message}</span>
+        ) : (
+          <>{/* This shows the default value on view mode */}</>
+        )}
+      </p>
     )}
   </div>
 );
