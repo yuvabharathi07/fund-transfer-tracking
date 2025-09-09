@@ -1,8 +1,6 @@
 import React, { useMemo, useState } from "react";
-import Menu from "./Menu";
-import TransactionTable from "./TransactionTable";
+import DynamicTable from "./DynamicTable";
 import Search from "./Search";
-import Header from "./Header";
 import StatCard from "./StatCard";
 
 // Responsive FundTransfer Dashboard
@@ -31,7 +29,13 @@ const currency = new Intl.NumberFormat("en-IN", { style: "currency", currency: "
 
 // --------------------------------- Return Function
 export default function FundTransferDashboard() {
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const TRANSACTIONTABLEHEADERS = [
+    {name : 'Transaction ID', colKey : 'id'},
+    {name : 'User', colKey : 'user', colClassName : 'text-[#49739c]'},
+    {name : 'Amount', colKey : 'amount', colClassName : 'text-[#49739c]'},
+    {name : 'Date', colKey : 'date', colClassName : 'text-[#49739c]'},
+    {name : 'Status', headerClassName : 'w-40', colKey : 'status', colClassName : 'py-2', setStatusPill : true}
+  ];  
   const [search, setSearch] = useState("");
 
   const filtered = useMemo(() => {
@@ -48,14 +52,8 @@ export default function FundTransferDashboard() {
   }, []);
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-slate-50 overflow-x-hidden">
-      {/*------------------------- Header ---------------------------*/}
-      <Header setMobileNavOpen={setMobileNavOpen} />
-
-      <div className="grid md:grid-cols-[240px_1fr] gap-0 flex-1">
-        {/* Sidebar (desktop) */}
-       <Menu mobileNavOpen={mobileNavOpen} setMobileNavOpen={setMobileNavOpen} />
-
+   
+      <>
         {/*---------------------- Main content -----------------------*/}
         <main className="flex flex-col min-w-0">
           {/* Top: Dashboard title & stats */}
@@ -73,14 +71,14 @@ export default function FundTransferDashboard() {
           </div>
 
           {/* Search */}
-          <Search search={search} setSearch={setSearch} />
+          {/* <Search search={search} setSearch={setSearch} /> */}
 
           {/*----------------------- Transactions ----------------------*/}
           <section className="px-4 sm:px-6 lg:px-10 pb-6">
             <h2 className="text-[#0d141c] text-xl font-bold tracking-tight mb-3">Today's Transactions</h2>
 
             {/* -------------------- Transaction Table ---------------------*/}
-           <TransactionTable filtered={filtered} currency={currency} />
+           <DynamicTable tableId='dashboard' tableHeaders={TRANSACTIONTABLEHEADERS} tableBodies={filtered} currency={currency} />
 
             
 
@@ -104,10 +102,7 @@ export default function FundTransferDashboard() {
             </div> */}
           </section>
         </main>
-      </div>
-
-      {/* Mobile sidebar drawer */}
+      </>
      
-    </div>
   );
 }

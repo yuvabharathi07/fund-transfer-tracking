@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Header = ({setMobileNavOpen}) => {
   return (
@@ -32,13 +33,12 @@ const Header = ({setMobileNavOpen}) => {
             </button>
 
             {/* Profile */}
-            <div
-            className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-            style={{
+            <Link to='/profile' className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style={{
                 backgroundImage:
                 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuCy0eVTt0p8SQeGA-KUQbsA5Ow2nVDoS6zu-INhJNl4xZxGIpvLZFY9Md3UWFNtZaTGjHRMwTkBIPgk50T7ESQyMnyARbUiUGuoNCLBFh4JJUkURiqnkWNkCRCQp-hEhwhqqGsqrnSs5g-zCcb10c_cA0MPNbdzynOplhefPUnxWPnj1jfM_9SIX2gFul9rsi6rSsckzMPn7M8CHeZcXfHBMLsTC2kczhMLmxHnUDRO_hNBHgLJ9xl6lQhtjkvtCbqwUgBE_6_gispk")',
-            }}
-            />
+            }} >
+
+            </Link>
         </div>
     </header>
   )

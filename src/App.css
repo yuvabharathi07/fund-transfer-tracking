@@ -27,3 +27,7 @@
 body{
   font-family: Inter, "Noto Sans", sans-serif;
 }
+
+button:hover{
+  cursor: pointer;
+}

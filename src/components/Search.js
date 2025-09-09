@@ -13,7 +13,7 @@ const Search = ({search, setSearch}) => {
             <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search by Transaction ID or User"
+                placeholder="Search..."
                 className="w-full h-12 bg-transparent outline-none placeholder:text-[#49739c] text-[#0d141c] text-base px-2 sm:px-3"
             />
             </div>
