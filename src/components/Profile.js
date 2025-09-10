@@ -10,6 +10,8 @@ const Profile = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
+    getValues
   } = useForm({
     defaultValues: {
       fullName: "Olivia Carter",
@@ -42,11 +44,10 @@ const Profile = () => {
     <div className="min-h-screen bg-gray-950 text-gray-100 font-sans">
       {/* Profile Header */}
       <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-8 text-center relative">
-        <div className="absolute inset-0 bg-black/40"></div>
-        <div className="relative z-10 flex flex-col items-center">
+        <div className="relative z-10 flex flex-col items-center p-2">
           <img
-            src="/Images/profile_image.jpg"
-            className="w-28 h-12 rounded-full border-4 border-white shadow-lg"
+            src="/Images/profile_image.jpg" style={{width: "150px", height : "100px"  }}
+            className=" rounded-full border-4 border-white shadow-lg"
             alt="profile"
           />
           <h1 className="text-2xl font-bold mt-4">Olivia Carter</h1>
@@ -56,9 +57,20 @@ const Profile = () => {
       </div>
 
       <div className="max-w-4xl mx-auto p-6 space-y-8">
+        {/* --------------------------------------- Stats ---------------------------------------- */}
+        <section className="bg-gray-900 rounded-2xl p-2 shadow-lg border border-gray-800">
+          <h2 className="text-lg font-semibold mb-4 text-indigo-400">
+            Activity Stats
+          </h2>
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            <StatCard title="Total Transactions" value="250" />
+            <StatCard title="Active Users" value="500" />
+            <StatCard title="Reports Generated" value="25" />
+          </div>
+        </section>
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* -------------------------- Personal Information ------------------------------- */}
-          <section className="bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-800">
+          <section className="bg-gray-900 rounded-2xl p-2 shadow-lg border border-gray-800">
             <h2 className="text-lg font-semibold mb-4 text-indigo-400">
               Personal Information
             </h2>
@@ -69,6 +81,7 @@ const Profile = () => {
                 register={register}
                 errors={errors}
                 isEditing={isEditing}
+                getValues={getValues} 
               />
               <EditableField
                 label="Date of Birth"
@@ -77,6 +90,7 @@ const Profile = () => {
                 register={register}
                 errors={errors}
                 isEditing={isEditing}
+                getValues={getValues} 
               />
               <EditableField
                 label="Gender"
@@ -86,6 +100,7 @@ const Profile = () => {
                 register={register}
                 errors={errors}
                 isEditing={isEditing}
+                getValues={getValues} 
               />
               <EditableField
                 label="Nationality"
@@ -93,12 +108,13 @@ const Profile = () => {
                 register={register}
                 errors={errors}
                 isEditing={isEditing}
+                getValues={getValues} 
               />
             </div>
           </section>
 
           {/* ----------------------------- Contact Details ------------------------------- */}
-          <section className="bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-800">
+          <section className="bg-gray-900 rounded-2xl p-2 shadow-lg border border-gray-800">
             <h2 className="text-lg font-semibold mb-4 text-indigo-400">
               Contact Details
             </h2>
@@ -110,6 +126,7 @@ const Profile = () => {
                 errors={errors}
                 isEditing={isEditing}
                 rules={{ required: "Email is required" }}
+                getValues={getValues} 
               />
               <EditableField
                 label="Phone"
@@ -117,6 +134,7 @@ const Profile = () => {
                 register={register}
                 errors={errors}
                 isEditing={isEditing}
+                getValues={getValues} 
               />
               <EditableField
                 label="Address"
@@ -124,6 +142,7 @@ const Profile = () => {
                 register={register}
                 errors={errors}
                 isEditing={isEditing}
+                getValues={getValues} 
               />
             </div>
 
@@ -137,17 +156,7 @@ const Profile = () => {
           </section>
         </form>
 
-        {/* --------------------------------------- Stats ---------------------------------------- */}
-        <section className="bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-800">
-          <h2 className="text-lg font-semibold mb-4 text-indigo-400">
-            Activity Stats
-          </h2>
-          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-            <StatCard title="Total Transactions" value="250" />
-            <StatCard title="Active Users" value="500" />
-            <StatCard title="Reports Generated" value="25" />
-          </div>
-        </section>
+        
 
         {/* --------------------------------- Actions ------------------------------------- */}
         <section className="flex flex-wrap gap-4 justify-center">
@@ -191,9 +200,10 @@ const EditableField = ({
   errors,
   isEditing,
   rules = {},
+  getValues,
 }) => (
   <div>
-    <p className="text-sm text-gray-400 mb-1">{label}</p>
+    <p className=" text-gray-400 mb-1">{label}</p>
     {isEditing ? (
       type === "select" ? (
         <select
@@ -214,13 +224,14 @@ const EditableField = ({
         />
       )
     ) : (
-      <p className="text-base font-medium text-gray-200">
-        {errors[name] ? (
-          <span className="text-red-400">{errors[name].message}</span>
-        ) : (
-          <>{/* This shows the default value on view mode */}</>
-        )}
-      </p>
+    <p className="text-base font-medium text-gray-200">
+      {errors[name] ? (
+        <span className="text-red-400">{errors[name].message}</span>
+      ) : (
+        getValues(name)   // ✅ show default or updated value
+      )}
+    </p>
+
     )}
   </div>
 );

@@ -13,15 +13,7 @@ const Reports = () => {
         <div className="px-40 flex flex-1 justify-center py-5">
           <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
             {/* Reports Heading */}
-            <div className="flex flex-wrap justify-between gap-3 p-4">
-              <div className="flex min-w-72 flex-col gap-3">
-                <h2 className="font-bold leading-tight" > Reports </h2>
-                <p className="text-[#9292c9] text-sm">
-                  Analyze fund transfer data with interactive charts and
-                  summaries.
-                </p>
-              </div>
-            </div>
+             <p className="text-[#0d141c] text-2xl sm:text-3xl font-bold tracking-tight"> Reports </p>
 
             {/* Filters */}
             <div className="flex gap-3 p-3 flex-wrap pr-4">
@@ -30,8 +22,8 @@ const Reports = () => {
                   key={i}
                   className="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#232348] pl-4 pr-2"
                 >
-                  <p className="text-white text-sm font-medium">{label}</p>
-                  <div className="text-white">
+                  <p className="text-sm font-medium">{label}</p>
+                  <div className="">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20px"
@@ -47,7 +39,7 @@ const Reports = () => {
             </div>
 
             {/* Financial Summary */}
-            <h2 className="text-white text-[22px] font-bold px-4 pb-3 pt-5">
+            <h2 className=" text-[22px] font-bold px-4 pb-3 pt-5">
               Financial Summary
             </h2>
 
