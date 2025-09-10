@@ -1,26 +1,14 @@
-import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import {
-  IconButton,
-  TextField,
-  Box,
-  Button,
-  Stack
-} from "@mui/material";
+import {IconButton, TextField, Box, Button, Stack} from "@mui/material";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import { useState, useEffect } from "react";
 
-export default function DynamicTable({
-  tableId,
-  tableHeaders,
-  tableBodies,
-  handleEdit,
-  handleDelete,
-}) {
+export default function DynamicTable({tableId, tableHeaders, tableBodies, handleEdit, handleDelete}) {
   // 🔹 Search state
-  const [searchText, setSearchText] = React.useState("");
-  const [filteredRows, setFilteredRows] = React.useState(tableBodies);
+  const [searchText, setSearchText] = useState("");
+  const [filteredRows, setFilteredRows] = useState(tableBodies);
 
   // 🔹 Columns definition for DataGrid
   const columns = tableHeaders.map((header) => {
@@ -103,13 +91,13 @@ export default function DynamicTable({
   };
 
   // 🔹 Keep filteredRows updated when tableBodies changes
-  React.useEffect(() => {
-    setFilteredRows(rows);
-  }, [tableBodies]);
+    useEffect(() => {
+      setFilteredRows(rows);
+    }, [tableBodies]);
 
   // 🔹 Export to CSV
   const exportToCSV = () => {
-    const worksheet = XLSX.utils.json_to_sheet(filteredRows);
+    const worksheet = XLSX.utils.json_to_sheet(rows);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
     const csvBuffer = XLSX.write(workbook, {

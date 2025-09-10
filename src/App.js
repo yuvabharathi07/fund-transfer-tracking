@@ -8,6 +8,7 @@ import Header from './components/Header';
 import { useEffect, useMemo, useState } from 'react';
 import Profile from './components/Profile';
 import Reports from './components/Reports';
+import Settings from './components/Settings';
 
 function App() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -66,6 +67,7 @@ function App() {
               <Route index element = {<Users userTableHeaders={USERTABLEHEADERS} users={filteredUsers} userHeaderValues ={userHeaderValues} userSearch={userSearch} setuserSearch={setuserSearch} />} />
             </Route>
             <Route path="/Reports" element={<Reports />} />
+             <Route path="/Settings" element={<Settings />} />
           </Routes>
         </main>
       </div>
