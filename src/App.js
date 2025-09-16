@@ -9,6 +9,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Profile from './components/Profile';
 import Reports from './components/Reports';
 import Settings from './components/Settings';
+import Login from './components/Login';
 
 function App() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -61,6 +62,7 @@ function App() {
         {/* Routed pages */}
         <main className="flex flex-col min-w-0">
           <Routes>
+            <Route path="/" element={<Login />} />
             <Route path="/AdminDashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="Users" >
